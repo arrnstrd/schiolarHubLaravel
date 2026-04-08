@@ -109,7 +109,6 @@
                 </div>
             </div>
         </div>
-
         {{-- NOTES / RESOURCES --}}
         <div class="col-12 col-md-4">
             <div class="card shadow-sm h-100">
