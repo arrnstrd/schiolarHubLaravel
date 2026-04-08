@@ -9,5 +9,11 @@ class Task extends Model
     //
 
     // app/Models/Task.php
-protected $fillable = ['user_id', 'task_name', 'subject', 'due_date', 'status'];
+protected $fillable = [
+        'task_name', 
+        'due_date', 
+        'subject', 
+        'status', 
+        'user_id'
+    ];
 }

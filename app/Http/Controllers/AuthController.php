@@ -22,7 +22,7 @@ public function showRegister() {
            [//                                                   users table, in the name field
             'name' => ['required' , 'min:5'  , Rule::unique('users', 'name')],
             'email' => ['required' , 'email'],
-            'password' => ['required', 'min:15' ]
+            'password' => ['required', 'min:10' ]
            ]
         );
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
+use App\Models\Page;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -12,28 +14,34 @@ class CrudController extends Controller
      */
     public function index()
     {
-        //
-        $tasks = Task::select('task_name' , 'due_date' , 'subject')->latest()->get();
+ 
+    $tasks = Task::where('user_id', auth()->id())
+        ->latest()
+        ->get();
 
-        return view('dashboard', compact('tasks'));
+
+         $notes = Note::where('user_id' , auth()->id())
+        ->latest()
+        ->get();
 
 
 
-        $tasks = Task::where('status')->latest()->get();
-        $totalTasks=Task::where('status')->count();
-        return view('dashboard', compact('tasks', 'totalTasks'));
+
+ 
+    $taskCounts = [
+        'pending'     => $tasks->where('status', 'pending')->count(),
+        'in_progress' => $tasks->where('status', 'in_progress')->count(),
+        'completed'   => $tasks->where('status', 'completed')->count(),
+    ];
+
+    return view('dashboard', compact('tasks', 'taskCounts', 'notes'));
     }
 
 
  
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-    
+
              
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -41,7 +49,7 @@ class CrudController extends Controller
     public function store(Request $request)
     {
        $incomingFields= $request->validate([
-           'task_name' => ['required', 'string', 'max:40'],
+           'task_name' => ['required', 'string'],
             'due_date' => ['required', 'date'],
             'subject' => ['required', 'string'],
             'status' => ['required', 'in:pending,in_progress,completed']
@@ -73,7 +81,7 @@ class CrudController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+public function update(Request $request, string $id)
     {
         $task = Task::findOrFail($id);
 
@@ -94,6 +102,12 @@ class CrudController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+            $task = Task::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->firstOrFail();
+
+    $task->delete();
+
+    return redirect('/dashboard');
     }
 }

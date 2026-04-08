@@ -37,7 +37,7 @@
             <div class="form-group mb-3">
                 <label for="password" class="text-muted small fw-bold">Password</label>
                 <input type="password" class="form-control p-2" name="password" id="password" placeholder="Create a password" style="border-radius: 8px;">
-                 <p class="small mt-1 text-muted"> <i> Use at least 15 characters.</i>.</p>
+                 <p class="small mt-1 text-muted"> <i> Use at least 10 characters.</i>.</p>
             </div>
 
             <div class="form-group mb-4">
